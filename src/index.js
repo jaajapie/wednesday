@@ -1,6 +1,7 @@
-import bodyParser from 'body-parser'
+const bodyParser = require('body-parser')
 const express = require('express')
 const app = express()
+
 app.use(bodyParser.json())
 app.use(
   bodyParser.urlencoded({
@@ -8,7 +9,8 @@ app.use(
   })
 )
 app.use(express.json())
-app.use('/api/users', require('./routes/user.js'))
+app.use('/api/users', require('./routes/user'))
+
 
 const PORT = 5000
 app.listen(PORT, () => {

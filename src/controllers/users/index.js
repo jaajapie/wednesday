@@ -1,8 +1,9 @@
-import bll from './bussinessLogic.js'
-import helper from '../../helper.js'
+const bll = require('./bussinessLogic.js')
+const helper = require('../../helper.js')
 
-export default {
-  GetUsers: async function (req, res) {
+const ctrl = {}
+
+ctrl.GetUsers =  async function (req, res) {
     let result = await bll.GetUsers(req.query)
     if (result.status === 200) {
       helper.responseToClient({ res: res, httpcode: '200', data: result.data })
@@ -10,7 +11,7 @@ export default {
       helper.responseToClient({ res: res, httpcode: '404', msgerror: result.message })
     }
   },
-  PostUsers: async function (req, res) {
+ctrl.PostUsers = async function (req, res) {
     if (req.body.Name === undefined) {
       helper.responseToClient({ res: res, httpcode: '400', msgerror: 'Required Name' })
     } else if (req.body.Username === undefined) {
@@ -24,4 +25,6 @@ export default {
       }
     }
   }
-}
+
+
+module.exports = ctrl

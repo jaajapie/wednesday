@@ -1,7 +1,6 @@
-import user from '../controllers/users/index'
-
 const express = require('express')
 const router = express.Router()
+const user = require('../controllers/users/index')
 
 router.get('/', async (req, res) => {
   let users = await user.GetUsers(req, res)
