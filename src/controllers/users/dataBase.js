@@ -6,7 +6,7 @@ export default {
   },
   PostUsers: async function (param) {
     let Id = users[users.length - 1].Id + 1
-    users.push({Id: Id, Name: param.Name, Username: param.Username, Password: param.Password })
+    users.push({ Id: Id, Name: param.Name, Username: param.Username, Password: param.Password })
     return Id
   }
 }
