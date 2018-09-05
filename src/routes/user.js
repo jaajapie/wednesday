@@ -9,7 +9,8 @@ router.get('/', async (req, res) => {
 })
 
 router.post('/', async (req, res) => {
-  res.json([])
+  let Id = await user.PostUsers(req, res)
+  res.json(Id)
 })
 
 router.put('/:id', async (req, res) => {
@@ -19,3 +20,5 @@ router.put('/:id', async (req, res) => {
 router.delete('/:id', async (req, res) => {
   res.json([])
 })
+
+module.exports = router
