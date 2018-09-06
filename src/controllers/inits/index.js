@@ -1,32 +1,14 @@
-const router = require('express').Router()
+const bll = require('./bussinessLogic.js')
+const helper = require('../../helper.js')
+const connectDB = require('../../mssql-config.js')
 const sequelize = app.get('sequelize')
-const ctrlTest = require('../controllers/test/index')
-// setup models
-require('../models/test')()
-const testModel = sequelize.models['test']
 
-router.get('/getdata', async (req, res) => {
-  let data = await ctrlTest.GetTests(req, res)
-  res.json(data)
-})
+const ctrl = {}
+module.exports = ctrl
 
-router.get('/', async (req, res) => {
+ctrl.CreateDatabase = async (req, res) => {
   try {
-    const data = await testModel.all({
-      attributes: ['test'],
-      order: [
-        ['id', 'desc']
-      ]
-    })
-    res.json(data)
-  } catch (e) {
-    res.status(500).json({ error: e.message })
-  }
-})
-
-router.get('/call', async (req, res) => {
-  try {
-    let data = await sequelize.query(` select carloan_lead.id
+    let data = await connectDB.ExecuteQuery(` select carloan_lead.id
       ,title_th + ' ' +name_th + ' ' + lastname_th as custname
       ,log_carloan_lead_process.tracking_remark
       ,log_carloan_lead_process.tracking_status
@@ -44,7 +26,8 @@ router.get('/call', async (req, res) => {
       where is_active = 'y' 
       and carloan_lead.t_status is null 
       and carloan_lead.status is null
-      and log_carloan_lead_process.tracking_remark is not null `, { type: sequelize.QueryTypes.SELECT })
+      and log_carloan_lead_process.tracking_remark is not null
+    and carloan_lead.id = 2180000002 `)
     console.log(data)
     res.send({ data })
   } catch (e) {
@@ -53,5 +36,4 @@ router.get('/call', async (req, res) => {
       message: e.message
     })
   }
-})
-module.exports = router
+}
