@@ -1,7 +1,5 @@
 const Sequelize = require('sequelize')
-// const sequelize = app.get('sequelize')
-const config = require('../data/config') // ไฟล์ config ที่เก็บ db
-const sequelize = require('../lib/sequelize')(config[config.db]) // ทำการเรียกใช้ sequelize
+const sequelizeCon = require('../lib/sequelize') // ทำการเรียกใช้ sequelize
 
 module.exports = () => {
   const fields = {
@@ -16,5 +14,5 @@ module.exports = () => {
     timestamps: false
   }
 
-  sequelize.define('test', fields, options)
+  sequelizeCon.define('tests', fields, options)
 }

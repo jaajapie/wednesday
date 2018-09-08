@@ -1,10 +1,28 @@
-const bll = require('./bussinessLogic.js')
-const helper = require('../../helper.js')
+const bll = require('./bussinessLogic')
+const helper = require('../../helper')
 
 const ctrl = {}
 
 ctrl.GetTests = async (req, res) => {
   let result = await bll.GetTests(req.query)
+  if (result.status === 200) {
+    helper.responseToClient({ res: res, httpcode: '200', data: result.data })
+  } else if (result.status === 404) {
+    helper.responseToClient({ res: res, httpcode: '404', msgerror: result.message })
+  }
+}
+
+ctrl.GetTestsQueryRaw = async (req, res) => {
+  let result = await bll.GetTestsQueryRaw(req.query)
+  if (result.status === 200) {
+    helper.responseToClient({ res: res, httpcode: '200', data: result.data })
+  } else if (result.status === 404) {
+    helper.responseToClient({ res: res, httpcode: '404', msgerror: result.message })
+  }
+}
+
+ctrl.GetTestsId = async (req, res) => {
+  let result = await bll.GetTestsId(req.query)
   if (result.status === 200) {
     helper.responseToClient({ res: res, httpcode: '200', data: result.data })
   } else if (result.status === 404) {
