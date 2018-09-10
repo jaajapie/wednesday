@@ -36,6 +36,47 @@ const modules = {
         return { status: 201, data: _arrUser }
       }
     }
+  },
+  PutUser: async function (Id, param) {
+    let userData = await this.GetUsersById({Id: Id})
+    if (userData.status === 204) {
+      return { status: 204, message: 'no user data' }
+    }
+    param.Id = Id
+    param.role = userData.data[0].role
+    let result = await dll.PutUsers(param)
+    if (result.err !== undefined) {
+      return { status: 500, message: result.err.message }
+    } else {
+      let userUpdated = await dll.GetUsersById({Id: Id})
+      if (userUpdated.err !== undefined) {
+        return { status: 500, message: userUpdated.err.message }
+      } else {
+        let _arrUser = helper.convertArrToArrString(userUpdated.result.recordsets[0])
+        return { status: 200, data: _arrUser }
+      }
+    }
+  },
+  DeleteUser: async function (Id, param) {
+    let userData = await this.GetUsersById({Id: Id})
+    console.log(userData)
+    if (userData.status === 204) {
+      return { status: 204, message: 'no user data' }
+    }
+    console.log('sss')
+    param.Id = Id
+    let result = await dll.DeleteUsers(param)
+    if (result.err !== undefined) {
+      return { status: 500, message: result.err.message }
+    } else {
+      let userUpdated = await dll.GetUsersById({Id: Id})
+      if (userUpdated.err !== undefined) {
+        return { status: 500, message: userUpdated.err.message }
+      } else {
+        let _arrUser = helper.convertArrToArrString(userUpdated.result.recordsets[0])
+        return { status: 200, data: _arrUser }
+      }
+    }
   }
 }
 

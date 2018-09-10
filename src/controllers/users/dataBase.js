@@ -7,7 +7,8 @@ const modules = {
                 ,[userName]
                 ,[password]
                 ,[role]
-                FROM [test_users]; `
+                FROM [test_users]
+                WHERE activeStatus = 'Y'; `
     let result = await gConfig.executeQueryAsync(gConfig.conn02, query)
     return result
   },
@@ -19,7 +20,7 @@ const modules = {
                 ,[password]
                 ,[role]
                 FROM [test_users]
-                WHERE userName = '${param.userName}'; `
+                WHERE userName = '${param.userName}' AND activeStatus = 'Y'; `
     let result = await gConfig.executeQueryAsync(gConfig.conn02, query)
     return result
   },
@@ -31,7 +32,7 @@ const modules = {
                 ,[password]
                 ,[role]
                 FROM [test_users]
-                WHERE Id = '${param.Id}'; `
+                WHERE Id = '${param.Id}' AND activeStatus = 'Y'; `
     let result = await gConfig.executeQueryAsync(gConfig.conn02, query)
     return result
   },
@@ -39,11 +40,13 @@ const modules = {
     var query = `INSERT INTO [test_users]
                 ([userName]
                 ,[password]
-                ,[role])
+                ,[role]
+                ,[activeStatus])
                   VALUES
                 (${helper.setDefaultParam(param.userName, null)}
                 ,${helper.setDefaultParam(param.passWord, null)}
-                ,${helper.setDefaultParam(param.role, null)}); `
+                ,${helper.setDefaultParam(param.role, null)}
+                ,'Y'); `
     let result = await gConfig.executeQueryAsync(gConfig.conn02, query)
     return result
   },
@@ -52,12 +55,13 @@ const modules = {
                  SET [userName] = ${helper.setDefaultParam(param.userName, null)}
                     ,[password] = ${helper.setDefaultParam(param.passWord, null)}
                     ,[role] = ${helper.setDefaultParam(param.role, null)}
-                 WHERE Id = ${helper.setDefaultParam(param.Id, null)}; `
+                 WHERE Id = ${helper.setDefaultParam(param.Id, null)} AND activeStatus = 'Y'; `
     let result = await gConfig.executeQueryAsync(gConfig.conn02, query)
     return result
   },
   DeleteUsers: async function (param) {
-    var query = `DELETE FROM [test_users]
+    var query = `UPDATE [test_users]
+                 SET [activeStatus] = 'N'
                  WHERE Id = ${helper.setDefaultParam(param.Id, null)}; `
     let result = await gConfig.executeQueryAsync(gConfig.conn02, query)
     return result

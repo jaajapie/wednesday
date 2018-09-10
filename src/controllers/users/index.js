@@ -26,11 +26,21 @@ const modules = {
   },
   PutUsers: async function (req, res) {
     const {id} = req.params
-    let result = await bll.GetUsers({Id: id})
+    let result = await bll.PutUser(id, req.body)
     if (result.status === 204) {
       helper.responseToClient({ res: res, httpcode: '204', message: result.message })
     } else {
-      
+
+      helper.responseToClient({ res: res, httpcode: '200', data: result.data })
+    }
+  },
+  DeleteUsers: async function (req, res) {
+    const {id} = req.params
+    let result = await bll.DeleteUser(id, req.body)
+    if (result.status === 204) {
+      helper.responseToClient({ res: res, httpcode: '204', message: result.message })
+    } else {
+
       helper.responseToClient({ res: res, httpcode: '200', data: result.data })
     }
   }
