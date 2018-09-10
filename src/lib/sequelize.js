@@ -14,5 +14,4 @@ const sequelize = new Sequelize(config.param.database, config.param.user, config
   },
   storage: `path/to/database.${config.driver}`
 })
-  // return sequelize
 module.exports = sequelize

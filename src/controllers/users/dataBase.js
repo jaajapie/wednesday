@@ -3,39 +3,40 @@
 const sequelize = require('../../lib/sequelize') // ทำการเรียกใช้ sequelize
 
 require('../../models/user')() // setup model
-const userModel = sequelize.models['user']
+const userModel = sequelize.models['test_user']
 
 const ctrl = {}
 ctrl.GetUsersAll = async function (param) {
   try {
     const data = await userModel.all({
-      attributes: ['firstname','lastname'],
+      attributes: ['firstName', 'lastName'],
       order: [
-        ['id', 'desc']
+        ['Id', 'desc']
       ]
     })
     return { data }
   } catch (e) {
     return { status: false, message: e.message }
   }
-},
+}
 
 ctrl.GetUsersById = async function (param) {
   try {
     const data = await userModel.all({
-      attributes: ['firstname','lastname'],
+      attributes: ['firstName', 'lastName'],
       where: {
-        id: param.id
+        Id: param.id
       },
       order: [
-        ['id', 'desc']
+        ['Id', 'desc']
       ]
     })
+    console.log(' data ==> ', data)
     return { status: 200, data }
   } catch (e) {
     return { status: 404, message: e.message }
   }
-},
+}
 
 ctrl.PostUsers = async function (param) {
   // let Id = users[users.length - 1].Id + 1
@@ -56,5 +57,4 @@ ctrl.PostUsers = async function (param) {
 //     return { status: false, message: e.message }
 //   }
 // }
-
 module.exports = ctrl

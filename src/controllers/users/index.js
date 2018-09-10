@@ -10,16 +10,18 @@ ctrl.GetUsersAll = async function (req, res) {
   } else if (result.status === 404) {
     helper.responseToClient({ res: res, httpcode: '404', msgerror: result.message })
   }
-},
+}
+
 ctrl.GetUsersById = async function (req, res) {
   let result = await bll.GetUsersById(req.params)
-  console.log('result => ', result.result.status)
+  console.log('result => ', result)
   if (result.result.status === 200) {
     helper.responseToClient({ res: res, httpcode: '200', data: result })
   } else if (result.result.status === 404) {
     helper.responseToClient({ res: res, httpcode: '404', msgerror: result.message })
   }
-},
+}
+
 ctrl.PostUsers = async function (req, res) {
   if (req.body.Name === undefined) {
     helper.responseToClient({ res: res, httpcode: '400', msgerror: 'Required Name' })
