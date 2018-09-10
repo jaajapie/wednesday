@@ -18,12 +18,13 @@ router.post('/', async (req, res) => {
 })
 
 router.put('/:id', async (req, res) => {
-  console.log(' req => ', req)
-  // res.json([])
+  let data = await user.PutUsers(req, res)
+  res.json(data)
 })
 
 router.delete('/:id', async (req, res) => {
-  res.json([])
+  let data = await user.DeleteUser(req, res)
+  res.json(data)
 })
 
 module.exports = router

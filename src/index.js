@@ -9,7 +9,7 @@ app.use(
   })
 )
 app.use(express.json())
-
+// const jwt = require('./middlewares/jwt')
 app.use('/api', require('./routes')) // ให้ route ไปที่ folder routes
 
 const PORT = 5000
