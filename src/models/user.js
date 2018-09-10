@@ -4,13 +4,16 @@ const sequelizeCon = require('../lib/sequelize') // ทำการเรีย�
 module.exports = () => {
   const fields = {
     Id: {
+      type: Sequelize.INTEGER,
       primaryKey: true,
-      type: Sequelize.INTEGER
+      autoIncrement: true
     },
     userName: Sequelize.STRING,
     password: Sequelize.STRING,
     firstName: Sequelize.STRING,
-    lastName: Sequelize.STRING
+    lastName: Sequelize.STRING,
+    role: Sequelize.STRING,
+    activeStatus: Sequelize.CHAR
   }
 
   const options = {

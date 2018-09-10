@@ -23,11 +23,11 @@ ctrl.GetUsersById = async function (req, res) {
 }
 
 ctrl.PostUsers = async function (req, res) {
-  if (req.body.Name === undefined) {
-    helper.responseToClient({ res: res, httpcode: '400', msgerror: 'Required Name' })
-  } else if (req.body.Username === undefined) {
+  if (!req.body.firstName) {
+    helper.responseToClient({ res: res, httpcode: '400', msgerror: 'Required firstName' })
+  } else if (!req.body.userName) {
     helper.responseToClient({ res: res, httpcode: '400', msgerror: 'Required Username' })
-  } else if (req.body.Password === undefined) {
+  } else if (!req.body.password) {
     helper.responseToClient({ res: res, httpcode: '400', msgerror: 'Required Password' })
   } else {
     let result = await bll.PostUsers(req.body)

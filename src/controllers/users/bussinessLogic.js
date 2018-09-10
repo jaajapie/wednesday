@@ -12,6 +12,7 @@ ctrl.GetUsersAll = async function (param) {
 }
 ctrl.PostUsers = async function (param) {
   let result = await dll.PostUsers(param)
+  console.log(' result ==> ', result)
   return { status: 200, data: result }
 }
 
