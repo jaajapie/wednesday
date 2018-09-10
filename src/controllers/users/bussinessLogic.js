@@ -59,11 +59,9 @@ const modules = {
   },
   DeleteUser: async function (Id, param) {
     let userData = await this.GetUsersById({Id: Id})
-    console.log(userData)
     if (userData.status === 204) {
       return { status: 204, message: 'no user data' }
     }
-    console.log('sss')
     param.Id = Id
     let result = await dll.DeleteUsers(param)
     if (result.err !== undefined) {
