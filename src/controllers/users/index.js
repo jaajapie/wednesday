@@ -1,9 +1,10 @@
+const jwt = require('jsonwebtoken')
+const bcrypt = require('bcryptjs')
 const bll = require('./bussinessLogic.js')
 const helper = require('../../helper.js')
 
-const ctrl = {}
-
-ctrl.GetUsers =  async function (req, res) {
+const modules = {
+  GetUsers: async function (req, res) {
     let result = await bll.GetUsers(req.query)
     if (result.status === 200) {
       helper.responseToClient({ res: res, httpcode: '200', data: result.data })
@@ -11,20 +12,27 @@ ctrl.GetUsers =  async function (req, res) {
       helper.responseToClient({ res: res, httpcode: '404', msgerror: result.message })
     }
   },
-ctrl.PostUsers = async function (req, res) {
-    if (req.body.Name === undefined) {
-      helper.responseToClient({ res: res, httpcode: '400', msgerror: 'Required Name' })
-    } else if (req.body.Username === undefined) {
-      helper.responseToClient({ res: res, httpcode: '400', msgerror: 'Required Username' })
-    } else if (req.body.Password === undefined) {
-      helper.responseToClient({ res: res, httpcode: '400', msgerror: 'Required Password' })
+  PostUsers: async function (req, res) {
+    if (req.body.userName === undefined) {
+      helper.responseToClient({ res: res, httpcode: '400', msgerror: 'Required userName' })
+    } else if (req.body.passWord === undefined) {
+      helper.responseToClient({ res: res, httpcode: '400', msgerror: 'Required passWord' })
     } else {
       let result = await bll.PostUsers(req.body)
-      if (result.status === 200) {
-        helper.responseToClient({ res: res, httpcode: '200' })
+      if (result.status === 201) {
+        helper.responseToClient({ res: res, httpcode: '201', data: result.data })
       }
     }
+  },
+  PutUsers: async function (req, res) {
+    const {id} = req.params
+    let result = await bll.GetUsers({Id: id})
+    if (result.status === 204) {
+      helper.responseToClient({ res: res, httpcode: '204', message: result.message })
+    } else {
+      
+      helper.responseToClient({ res: res, httpcode: '200', data: result.data })
+    }
   }
-
-
-module.exports = ctrl
+}
+module.exports = modules

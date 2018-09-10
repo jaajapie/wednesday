@@ -1,5 +1,5 @@
 import gConfig from '../../dbHelper.js'
-import helper from '../../helper'
+import helper from '../../helper.js'
 
 const modules = {
   GetUsers: async function (param) {
@@ -11,46 +11,23 @@ const modules = {
     let result = await gConfig.executeQueryAsync(gConfig.conn02, query)
     return result
   },
-  GetUsersByUsername: async function (param) {
-    var query = `SELECT [Id]
-                ,[firstname]
-                ,[lastname]
-                ,[userName]
-                ,[password]
-                ,[role]
-                FROM [test_users]
-                WHERE userName = '${param.userName}'; `
-    let result = await gConfig.executeQueryAsync(gConfig.conn02, query)
-    return result
-  },
-  GetUsersById: async function (param) {
-    var query = `SELECT [Id]
-                ,[firstname]
-                ,[lastname]
-                ,[userName]
-                ,[password]
-                ,[role]
-                FROM [test_users]
-                WHERE Id = '${param.Id}'; `
-    let result = await gConfig.executeQueryAsync(gConfig.conn02, query)
-    return result
-  },
   PostUsers: async function (param) {
     var query = `INSERT INTO [test_users]
                 ([userName]
                 ,[password]
                 ,[role])
+                 OUTPUT test_users.Id
                   VALUES
-                (${helper.setDefaultParam(param.userName, null)}
-                ,${helper.setDefaultParam(param.passWord, null)}
+                (${helper.setDefaultParam(param.username, null)}
+                ,${helper.setDefaultParam(param.password, null)}
                 ,${helper.setDefaultParam(param.role, null)}); `
     let result = await gConfig.executeQueryAsync(gConfig.conn02, query)
     return result
   },
   PutUsers: async function (param) {
     var query = `UPDATE [test_users]
-                 SET [userName] = ${helper.setDefaultParam(param.userName, null)}
-                    ,[password] = ${helper.setDefaultParam(param.passWord, null)}
+                 SET [userName] = ${helper.setDefaultParam(param.username, null)}
+                    ,[password] = ${helper.setDefaultParam(param.password, null)}
                     ,[role] = ${helper.setDefaultParam(param.role, null)}
                  WHERE Id = ${helper.setDefaultParam(param.Id, null)}; `
     let result = await gConfig.executeQueryAsync(gConfig.conn02, query)
