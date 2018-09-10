@@ -3,11 +3,20 @@ const helper = require('../../helper.js')
 
 const ctrl = {}
 
-ctrl.GetUsers = async function (req, res) {
-  let result = await bll.GetUsers(req.query)
+ctrl.GetUsersAll = async function (req, res) {
+  let result = await bll.GetUsersAll(req.params)
   if (result.status === 200) {
     helper.responseToClient({ res: res, httpcode: '200', data: result.data })
   } else if (result.status === 404) {
+    helper.responseToClient({ res: res, httpcode: '404', msgerror: result.message })
+  }
+},
+ctrl.GetUsersById = async function (req, res) {
+  let result = await bll.GetUsersById(req.params)
+  console.log('result => ', result.result.status)
+  if (result.result.status === 200) {
+    helper.responseToClient({ res: res, httpcode: '200', data: result })
+  } else if (result.result.status === 404) {
     helper.responseToClient({ res: res, httpcode: '404', msgerror: result.message })
   }
 },

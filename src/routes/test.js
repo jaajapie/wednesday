@@ -13,6 +13,7 @@ router.get('/getdataRaw:', async (req, res) => {
 
 router.get('/:id', async (req, res) => {
   let data = await ctrlTest.GetTestsId(req, res)
+  console.log('data ==>', data)
   res.json(data)
 })
 // GetTestsQueryRaw

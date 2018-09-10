@@ -2,6 +2,7 @@ const hp = {}
 
 hp.responseToClient = function Response ({res, httpcode, data, msgerror}) {
 let reData = {}
+console.log(' httpcode ==> ', httpcode)
 if (httpcode === '200') {
   reData.Status = {httpmessage: 'success', data: data, code: '200'}
   res.status(200)
