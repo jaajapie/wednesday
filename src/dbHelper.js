@@ -1,7 +1,7 @@
 var sql = require('mssql')
 
 export default {
-  conn02: {
+  connDev02: {
     user: 'sa',
     password: 'password',
     server: '192.168.0.2',

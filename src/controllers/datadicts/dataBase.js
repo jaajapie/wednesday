@@ -2,12 +2,9 @@ import gConfig from '../../dbHelper.js'
 import helper from '../../helper.js'
 
 const modules = {
-  GetUsers: async function (param) {
-    var query = `SELECT [Id]
-                ,[userName]
-                ,[password]
-                ,[role]
-                FROM [test_users]; `
+  GetAllTable: async function (param) {
+    var query = `SELECT TABLE_NAME
+                 FROM vmdbcenter.silkspan.INFORMATION_SCHEMA.TABLES; `
     let result = await gConfig.executeQueryAsync(gConfig.conn02, query)
     return result
   },
