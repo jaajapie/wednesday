@@ -1,23 +1,23 @@
+import project from '../controllers/projects/index'
 const express = require('express')
 const router = express.Router()
-const project = require('../controllers/projects/index')
 
 router.get('/', async (req, res) => {
-  let users = await project.GetProjects(req, res)
-  res.json(users)
+  await project.GetProjects(req, res)
 })
-
+router.get('/:id', async (req, res) => {
+  await project.GetProjectById(req, res)
+})
 router.post('/', async (req, res) => {
-  let Id = await project.PostProject(req, res)
-  res.json(Id)
+  await project.PostProject(req, res)
 })
 
 router.put('/:id', async (req, res) => {
-  res.json([])
+  await project.PutProject(req, res)
 })
 
 router.delete('/:id', async (req, res) => {
-  res.json([])
+  await project.DeleteProject(req, res)
 })
 
 module.exports = router

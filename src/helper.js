@@ -32,7 +32,7 @@ hp.responseToClient = function Response ({res, httpcode, data, msgerror}) {
     res.status(201)
     res.send(reData)
   } else if (httpcode === '204') {
-    reData.Status = {httpmessage: 'no content', data: data, code: '204'}
+    reData.Status = {httpmessage: 'no content', code: '204'}
     res.status(204)
     res.send(reData)
   }
