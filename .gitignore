@@ -1,11 +1,11 @@
 .DS_Store
 node_modules
-dbHelper.js
 /dist
 
 # local env files
 .env.local
 .env.*.local
+.dbHelper.js
 
 # Log files
 npm-debug.log*
