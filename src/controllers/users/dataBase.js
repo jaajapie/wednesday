@@ -1,4 +1,5 @@
 const sequelize = require('../../lib/sequelize') // ทำการเรียกใช้ sequelize
+const bcrypt = require('bcryptjs')
 
 require('../../models/user')() // setup model
 const userModel = sequelize.models['test_user']
@@ -36,9 +37,10 @@ ctrl.GetUsersById = async function (param) {
 }
 
 ctrl.PostUsers = async function (param) {
+  const hashPassword = bcrypt.hashSync(param.password)
   let objInsert = {
     userName: `${param.userName}`,
-    password: `${param.password}`,
+    password: `${hashPassword}`,
     firstName: `${param.firstName}`,
     lastName: `${param.lastName}`,
     role: `${param.role}`,
