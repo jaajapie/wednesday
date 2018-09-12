@@ -1,14 +1,14 @@
 const jwt = require('jsonwebtoken')
 
 module.exports = (req, res, next) => {
-  // console.log(req.headers)
-  if (!req.headers['authorization']) {
+  if (!req.headers.authorization) {
     return res.status(401).end()
   }
-  const authToken = req.headers['authorization']
-
+  const authToken = req.headers.authorization
+  console.log(' authToken ==> ', authToken)
   try {
     jwt.verify(authToken, 'SECRET')
+    console.log(1)
     next()
   } catch (err) {
     res.status(403).end()

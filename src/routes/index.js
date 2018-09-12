@@ -1,5 +1,6 @@
 const express = require('express')
 const router = express.Router()
+const jwt = require('../middlewares/jwt')
 // config file
 router.use('/users', require('./user'))
 router.use('/test', require('./test'))

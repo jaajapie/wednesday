@@ -3,9 +3,11 @@ const dll = require('./dataBase')
 const ctrl = {}
 
 ctrl.Login = async (param) => {
-  console.log(' req.body ==>', param)
   let result = await dll.Login(param)
-  return { result }
+  if (result.status) {
+    return { status: 200, data: result }
+  }
+  return { status: 404, data: result }
 }
 
 module.exports = ctrl

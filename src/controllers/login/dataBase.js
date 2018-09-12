@@ -9,26 +9,18 @@ const ctrl = {}
 
 ctrl.Login = async (param) => {
   const { userName, password } = param
-  console.log('username == >', userName)
-  console.log('password == >', password)
   try {
-    const u = await userModel.findOne({
-      where: {
-        userName
-      }
-    })
-    console.log(' u => ', bcrypt.compareSync(password, u.password))
-    if (!u) {
-      return { status: 500, message: e.message }
+    let data = await sequelize.query(` SELECT * FROM test_users WHERE userName = :userName `, { replacements: { userName: userName }, type: sequelize.QueryTypes.SELECT })
+    if (!data[0]) {
+      return { status: 500 }
     }
-    if (bcrypt.compareSync(password, u.password)) {
-      const token = jwt.sign({ userName: u.userName }, 'SECRET', {
+    if (bcrypt.compareSync(password, data[0].password)) {
+      const token = jwt.sign({ userName: data[0].userName }, 'SECRET', {
         expiresIn: '2 hours'
       })
-      console.log(' token ==> ', token)
-      // res.status(200).json({ token })
+      return { status: true, data: token }
     } else {
-      return { status: 500, message: e.message }
+      return { status: 500 }
     }
   } catch (e) {
     return { status: 500, message: e.message }

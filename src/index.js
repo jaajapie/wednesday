@@ -2,7 +2,6 @@ const bodyParser = require('body-parser')
 const express = require('express')
 const cors = require('./middlewares/cors')
 const prefilght = require('./middlewares/prefilght')
-const jwt = require('./middlewares/jwt')
 
 const app = express()
 app.use(cors, prefilght)
@@ -13,7 +12,7 @@ app.use(
   })
 )
 app.use(express.json())
-app.use('/api',jwt, require('./routes')) // ให้ route ไปที่ folder routes
+app.use('/api', require('./routes')) // ให้ route ไปที่ folder routes
 app.use(require('./middlewares/404'))
 const PORT = 5000
 
