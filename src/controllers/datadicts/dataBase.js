@@ -1,41 +1,56 @@
 import gConfig from '../../dbHelper.js'
 import helper from '../../helper.js'
+import dbConfig from '../../../hiddenConfig/configDB'
 
-const modules = {
-  GetAllTable: async function (param) {
-    var query = `SELECT TABLE_NAME
-                 FROM vmdbcenter.silkspan.INFORMATION_SCHEMA.TABLES; `
-    let result = await gConfig.executeQueryAsync(gConfig.conn02, query)
+class TableDAL {
+  GetAllServer () {
+    let data = dbConfig.GetAllServer()
+    return data
+  }
+  GetAllServerById (Id) {
+    let dataServer = dbConfig.GetAllServer()
+    let data = dataServer.filter((f) => {
+      return f.Id === 4
+    })
+    return data[0]
+  }
+  async GetAllTableByServerId (Id) {
+    let server = this.GetAllServerById(Id)
+    let serverDetail = dbConfig.GetServerDetail(server.Conn)
+    let query = `SELECT TABLE_NAME FROM ${serverDetail.database}.INFORMATION_SCHEMA.TABLES Order by TABLE_NAME ; `
+    let result = await gConfig.executeQueryAsync(serverDetail, query)
     return result
-  },
-  PostUsers: async function (param) {
-    var query = `INSERT INTO [test_users]
-                ([userName]
-                ,[password]
-                ,[role])
-                 OUTPUT test_users.Id
-                  VALUES
-                (${helper.setDefaultParam(param.username, null)}
-                ,${helper.setDefaultParam(param.password, null)}
-                ,${helper.setDefaultParam(param.role, null)}); `
-    let result = await gConfig.executeQueryAsync(gConfig.conn02, query)
+  }
+  async GetTableProjectByProjectId (param) {
+    var query = `SELECT [Id]
+                ,[projectId]
+                ,[tableName]
+                ,[description]
+                FROM [test_project_table]
+                WHERE projectId = ${helper.setDefaultParam(param.projectId, null)}; `
+    let result = await gConfig.executeQueryAsync(dbConfig.connDev02, query)
     return result
-  },
-  PutUsers: async function (param) {
-    var query = `UPDATE [test_users]
-                 SET [userName] = ${helper.setDefaultParam(param.username, null)}
-                    ,[password] = ${helper.setDefaultParam(param.password, null)}
-                    ,[role] = ${helper.setDefaultParam(param.role, null)}
-                 WHERE Id = ${helper.setDefaultParam(param.Id, null)}; `
-    let result = await gConfig.executeQueryAsync(gConfig.conn02, query)
+  }
+  async PostTableProject (param) {
+    var query = `INSERT INTO [test_project_table]
+                ([projectId]
+                 [tableName]
+                ,[description])
+                 VALUES
+                (${helper.setDefaultParam(param.projectId, null)}
+                ,${helper.setDefaultParam(param.tableName, null)}
+                ,${helper.setDefaultParam(param.description, null)}); `
+    let result = await gConfig.executeQueryAsync(dbConfig.connDev02, query)
     return result
-  },
-  DeleteUsers: async function (param) {
-    var query = `DELETE FROM [test_users]
-                 WHERE Id = ${helper.setDefaultParam(param.Id, null)}; `
-    let result = await gConfig.executeQueryAsync(gConfig.conn02, query)
+  }
+  async PutTableProject (param) {
+    var query = `UPDATE [test_project_table]
+                 SET  [tableName] = ${helper.setDefaultParam(param.tablename, null)}
+                 ,[description] = ${helper.setDefaultParam(param.description, null)}
+                 WHERE [projectId] = ${helper.setDefaultParam(param.projectId, null)}; `
+    let result = await gConfig.executeQueryAsync(dbConfig.connDev02, query)
     return result
   }
 }
 
-module.exports = modules
+module.exports = TableDAL
