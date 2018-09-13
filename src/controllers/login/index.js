@@ -8,7 +8,7 @@ ctrl.Login = async (req, res) => {
   if (result.status === 200) {
     helper.responseToClient({ res: res, httpcode: '200', data: result.data })
   } else if (result.status === 404) {
-    helper.responseToClient({ res: res, httpcode: '404', msgerror: result.message })
+    helper.responseToClient({ res: res, httpcode: '203', msgerror: result.message })
   }
 }
 

@@ -18,7 +18,7 @@ ctrl.Login = async (param) => {
       const token = jwt.sign({ userName: data[0].userName }, 'SECRET', {
         expiresIn: '2 hours'
       })
-      return { status: true, data: token }
+      return { status: 200, token }
     } else {
       return { status: 500 }
     }
