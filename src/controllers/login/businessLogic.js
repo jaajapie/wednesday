@@ -5,6 +5,8 @@ const bcrypt = require('bcryptjs')
 
 const modules = {
   Login: async function (param) {
+    console.log('param')
+    console.log(param)
     let result = await dllUser.GetUsersByUsername(param)
     if (result.err !== undefined) {
       return { status: 500, message: result.err }

@@ -21,6 +21,15 @@ class TableDAL {
     let result = await gConfig.executeQueryAsync(serverDetail, query)
     return result
   }
+  async GetTableDetail (Id, param) {
+    let server = this.GetAllServerById(Id)
+    let serverDetail = dbConfig.GetServerDetail(server.Conn)
+    let query = `SELECT TABLE_NAME,COLUMN_NAME,ORDINAL_POSITION,COLUMN_DEFAULT,IS_NULLABLE,DATA_TYPE,CHARACTER_MAXIMUM_LENGTH,NUMERIC_PRECISION,NUMERIC_SCALE
+                 FROM INFORMATION_SCHEMA.COLUMNS
+                 WHERE TABLE_NAME in (${helper.setDefaultParam(param.tableNames, null)}); `
+    let result = await gConfig.executeQueryAsync(serverDetail, query)
+    return result
+  }
   async GetTableProjectByProjectId (param) {
     var query = `SELECT [Id]
                 ,[projectId]
