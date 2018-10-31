@@ -15,7 +15,7 @@ class DatadictIndex {
     if (req.query.token !== token) {
       return res.sendStatus(401)
     }
-    return res.end(req.query.challenge)
+    return res.sendStatus(200)
   }
   async GetAllServer (req, res) {
     let result = await this.bll.GetAllServer()
