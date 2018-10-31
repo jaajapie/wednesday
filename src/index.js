@@ -25,7 +25,7 @@ app.use(express.json())
 // app.use('/api/login', require('./routes/login'))
 // app.use('/api/users', jwtAdmin, require('./routes/user'))
 // app.use('/api/projects', require('./routes/project'))
-app.use('/api/datadict', require('./routes/datadict'))
+app.use('/', require('./routes/datadict'))
 
 const port = process.env.PORT || 1337
 app.listen(port, () => {
