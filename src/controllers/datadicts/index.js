@@ -1,9 +1,21 @@
 import DatadictBLL from './businessLogic'
 const helper = require('../../helper.js')
-
+const token = 'test'
 class DatadictIndex {
   constructor () {
     this.bll = new DatadictBLL()
+  }
+  async GetEnginWebHook (req, res) {
+    if (req.query.token !== token) {
+      return res.sendStatus(401)
+    }
+    return res.end(req.query.challenge)
+  }
+  async EnginWebHook (req, res) {
+    if (req.query.token !== token) {
+      return res.sendStatus(401)
+    }
+    return res.end(req.query.challenge)
   }
   async GetAllServer (req, res) {
     let result = await this.bll.GetAllServer()
