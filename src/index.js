@@ -27,8 +27,8 @@ app.use(express.json())
 // app.use('/api/projects', require('./routes/project'))
 app.use('/api/datadict', require('./routes/datadict'))
 
-const PORT = 5000
-app.listen(PORT, () => {
-  console.log(`server running on port ${PORT}`)
+const port = process.env.PORT || 1337
+app.listen(port, () => {
+  console.log(`server running on port ${port}`)
 })
 module.exports = app
