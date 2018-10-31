@@ -17,14 +17,14 @@ app.use(
     extended: false
   })
 )
-const jwt = require('./middlewares/jwt')
-const jwtAdmin = require('./middlewares/jwtAdmin')
+// const jwt = require('./middlewares/jwt')
+// const jwtAdmin = require('./middlewares/jwtAdmin')
 
 app.use(express.json())
-app.use('cors','preflight')
-app.use('/api/login', require('./routes/login'))
-app.use('/api/users', jwtAdmin, require('./routes/user'))
-app.use('/api/projects', require('./routes/project'))
+// app.use('cors', 'preflight')
+// app.use('/api/login', require('./routes/login'))
+// app.use('/api/users', jwtAdmin, require('./routes/user'))
+// app.use('/api/projects', require('./routes/project'))
 app.use('/api/datadict', require('./routes/datadict'))
 
 const PORT = 5000
